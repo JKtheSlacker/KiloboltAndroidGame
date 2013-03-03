@@ -1,7 +1,8 @@
 package com.slaxer.robotgame;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
+
+import android.graphics.Rect;
 
 public class Robot {
 	final int JUMPSPEED = -15;
@@ -15,20 +16,20 @@ public class Robot {
 	private boolean ducked = false;
 	private boolean readyToFire = true;
 
-	private static Background bg1 = StartingClass.getBg1();
-	private static Background bg2 = StartingClass.getBg2();
+	private static Background bg1 = GameScreen.getBg1();
+	private static Background bg2 = GameScreen.getBg2();
 
 	private int speedX = 0;
 	private int speedY = 0;
-	public static Rectangle upperCollRect = new Rectangle(0, 0, 0, 0);
-	public static Rectangle lowerCollRect = new Rectangle(0, 0, 0, 0);
-	public static Rectangle leftCollRect = new Rectangle(0, 0, 0, 0);
-	public static Rectangle rightCollRect = new Rectangle(0, 0, 0, 0);
-	public static Rectangle leftFootCollRect = new Rectangle(0,0,0,0);
-	public static Rectangle rightFootCollRect = new Rectangle(0,0,0,0);
+	public static Rect upperCollRect = new Rect(0, 0, 0, 0);
+	public static Rect lowerCollRect = new Rect(0, 0, 0, 0);
+	public static Rect leftCollRect = new Rect(0, 0, 0, 0);
+	public static Rect rightCollRect = new Rect(0, 0, 0, 0);
+	public static Rect leftFootCollRect = new Rect(0,0,0,0);
+	public static Rect rightFootCollRect = new Rect(0,0,0,0);
 	// Use this to limit the number of tiles we have to do collision detection
 	// for.
-	public static Rectangle robotAreaRectangle = new Rectangle(0, 0, 0, 0);
+	public static Rect robotAreaRect = new Rect(0, 0, 0, 0);
 
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
@@ -74,17 +75,14 @@ public class Robot {
 		if (centerX + speedX <= 60)
 			centerX = 61;
 
-		// Set up the collision rectangles
-		upperCollRect.setRect(centerX - 34, centerY - 63, 68, 63);
-		lowerCollRect.setRect(upperCollRect.getX(), upperCollRect.getY() + 63,
-				68, 63);
-		leftCollRect.setRect(upperCollRect.getX() - 26,
-				upperCollRect.getY() + 32, 26, 20);
-		rightCollRect.setRect(upperCollRect.getX() + 68,
-				upperCollRect.getY() + 32, 26, 20);
-		leftFootCollRect.setRect(centerX - 50, centerY + 20, 50, 15);
-		rightFootCollRect.setRect(centerX, centerY + 20, 50, 15);
-		robotAreaRectangle.setRect(centerX - 110, centerY - 110, 180, 180);
+		// Set up the collision Rects
+		upperCollRect.set(centerX - 34, centerY - 63, centerX + 34, centerY);
+		lowerCollRect.set(upperCollRect.left, upperCollRect.top + 63, upperCollRect.left + 68, upperCollRect.top + 128);
+		leftCollRect.set(upperCollRect.left - 26, upperCollRect.top + 32, upperCollRect.left, upperCollRect.top + 52);
+		rightCollRect.set(upperCollRect.left + 68, upperCollRect.top + 32, upperCollRect.left + 94, upperCollRect.top + 52);
+		leftFootCollRect.set(centerX - 50, centerY + 20, centerX, centerY + 35);
+		rightFootCollRect.set(centerX, centerY + 20, centerX + 50, centerY + 35);
+		robotAreaRect.set(centerX - 110, centerY - 110, centerX + 70, centerY + 70);
 	}
 
 	public void moveRight() {
