@@ -120,7 +120,7 @@ public class GameScreen extends Screen {
 			for(int mapXIndex = 0; mapXIndex < width; mapXIndex++){
 				if(mapXIndex < currentLine.length()){
 					char tileValue = currentLine.charAt(mapXIndex);
-					Tile tile = New Tile(mapXIndex, mapYIndex, Character.getNumericValue(tileValue));
+					Tile tile = new Tile(mapXIndex, mapYIndex, Character.getNumericValue(tileValue));
 					tileArray.add(tile);
 				}
 				
@@ -295,7 +295,7 @@ public class GameScreen extends Screen {
 	private void updateGameOver(List touchEvents) {
 		int touchEventsSize = touchEvents.size();
 		for (int touchEventIndex = 0; touchEventIndex < touchEventsSize; touchEventIndex++) {
-			TouchEvent currentEvent = (TouchEvent) touchEvents(touchEventIndex);
+			TouchEvent currentEvent = (TouchEvent) touchEvents.get(touchEventIndex);
 			// If the user touches anywhere in the screen
 			// while the game over screen is shown,
 			// clean up and return to the menu (on a new game.)
