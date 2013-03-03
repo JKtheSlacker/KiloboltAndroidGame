@@ -1,7 +1,8 @@
 package com.slaxer.robotgame.framework;
 
-import java.awt.Image;
 import java.util.ArrayList;
+
+import com.slaxer.framework.Image;
 
 public class Animation {
 	private ArrayList frames;
