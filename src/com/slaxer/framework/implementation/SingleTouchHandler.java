@@ -21,24 +21,24 @@ public class SingleTouchHandler implements TouchHandler {
 	float scaleY;
 
 	public SingleTouchHandler(View view, float scaleX, float scaleY) {
-		PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>(){
+		PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
 			@Override
-			public TouchEvent createObject(){
+			public TouchEvent createObject() {
 				return new TouchEvent();
 			}
 		};
 		touchEventPool = new Pool<TouchEvent>(factory, 100);
 		view.setOnTouchListener(this);
-		
+
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		synchronized(this){
+		synchronized (this) {
 			TouchEvent touchEvent = touchEventPool.newObject();
-			switch(event.getAction()){
+			switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				touchEvent.type = TouchEvent.TOUCH_DOWN;
 				isTouched = true;
@@ -53,19 +53,19 @@ public class SingleTouchHandler implements TouchHandler {
 				isTouched = false;
 				break;
 			}
-			
-			touchEvent.x = touchX = (int)(event.getX() * scaleX);
-			touchEvent.y = touchY = (int)(event.getY() * scaleY);
+
+			touchEvent.x = touchX = (int) (event.getX() * scaleX);
+			touchEvent.y = touchY = (int) (event.getY() * scaleY);
 			touchEventsBuffer.add(touchEvent);
-			
+
 			return true;
 		}
 	}
 
 	@Override
 	public boolean isTouchDown(int pointer) {
-		synchronized(this){
-			if(pointer == 0)
+		synchronized (this) {
+			if (pointer == 0)
 				return isTouched;
 			else
 				return false;
@@ -74,23 +74,23 @@ public class SingleTouchHandler implements TouchHandler {
 
 	@Override
 	public int getTouchX(int pointer) {
-		synchronized(this){
+		synchronized (this) {
 			return touchX;
 		}
 	}
 
 	@Override
 	public int getTouchY(int pointer) {
-		synchronized(this){
+		synchronized (this) {
 			return touchY;
 		}
 	}
 
 	@Override
 	public List<TouchEvent> getTouchEvents() {
-		synchronized(this){
+		synchronized (this) {
 			int length = touchEvents.size();
-			for(int touchEventPoolIndex = 0; touchEventPoolIndex < length; touchEventPoolIndex = 0){
+			for (int touchEventPoolIndex = 0; touchEventPoolIndex < length; touchEventPoolIndex = 0) {
 				touchEventPool.free(touchEvents.get(touchEventPoolIndex));
 			}
 			touchEvents.clear();

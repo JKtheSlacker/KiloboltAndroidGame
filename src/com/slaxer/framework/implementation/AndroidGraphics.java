@@ -132,22 +132,22 @@ public class AndroidGraphics implements Graphics {
 		srcRect.top = srcY;
 		srcRect.right = srcX + srcWidth;
 		srcRect.bottom = srcY + srcHeight;
-		
+
 		dstRect.left = x;
 		dstRect.top = y;
 		dstRect.right = x + width;
 		dstRect.bottom = y + height;
-		
+
 		canvas.drawBitmap(((AndroidImage) image).bitmap, srcRect, dstRect, null);
 	}
-	
+
 	@Override
-	public int getWidth(){
+	public int getWidth() {
 		return frameBuffer.getWidth();
 	}
-	
+
 	@Override
-	public int getHeight(){
+	public int getHeight() {
 		return frameBuffer.getHeight();
 	}
 

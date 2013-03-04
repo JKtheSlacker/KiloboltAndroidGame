@@ -27,7 +27,7 @@ public class Enemy {
 		if (Rect.intersects(collRect, Robot.upperCollRect)
 				|| Rect.intersects(collRect, Robot.lowerCollRect)
 				|| Rect.intersects(collRect, Robot.leftCollRect)
-				|| Rect.intersects(collRect, Robot.rightCollRect)){
+				|| Rect.intersects(collRect, Robot.rightCollRect)) {
 			// DEBUG Put real code here
 		}
 	}

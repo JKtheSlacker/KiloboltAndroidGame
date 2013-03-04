@@ -23,12 +23,13 @@ public class AndroidFileIO implements FileIO {
 	public AndroidFileIO(Context context) {
 		this.context = context;
 		this.assets = context.getAssets();
-		this.externalStoragePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
-		
+		this.externalStoragePath = Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + File.separator;
+
 	}
-	
+
 	@Override
-	public InputStream readAsset(String fileName) throws IOException{
+	public InputStream readAsset(String fileName) throws IOException {
 		return assets.open(fileName);
 	}
 

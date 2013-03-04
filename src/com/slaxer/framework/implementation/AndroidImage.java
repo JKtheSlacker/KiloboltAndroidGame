@@ -32,7 +32,7 @@ public class AndroidImage implements Image {
 	@Override
 	public void dispose() {
 		bitmap.recycle();
-		
+
 	}
 
 }

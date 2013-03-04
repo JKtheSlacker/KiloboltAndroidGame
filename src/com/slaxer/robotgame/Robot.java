@@ -25,8 +25,8 @@ public class Robot {
 	public static Rect lowerCollRect = new Rect(0, 0, 0, 0);
 	public static Rect leftCollRect = new Rect(0, 0, 0, 0);
 	public static Rect rightCollRect = new Rect(0, 0, 0, 0);
-	public static Rect leftFootCollRect = new Rect(0,0,0,0);
-	public static Rect rightFootCollRect = new Rect(0,0,0,0);
+	public static Rect leftFootCollRect = new Rect(0, 0, 0, 0);
+	public static Rect rightFootCollRect = new Rect(0, 0, 0, 0);
 	// Use this to limit the number of tiles we have to do collision detection
 	// for.
 	public static Rect robotAreaRect = new Rect(0, 0, 0, 0);
@@ -77,12 +77,17 @@ public class Robot {
 
 		// Set up the collision Rects
 		upperCollRect.set(centerX - 34, centerY - 63, centerX + 34, centerY);
-		lowerCollRect.set(upperCollRect.left, upperCollRect.top + 63, upperCollRect.left + 68, upperCollRect.top + 128);
-		leftCollRect.set(upperCollRect.left - 26, upperCollRect.top + 32, upperCollRect.left, upperCollRect.top + 52);
-		rightCollRect.set(upperCollRect.left + 68, upperCollRect.top + 32, upperCollRect.left + 94, upperCollRect.top + 52);
+		lowerCollRect.set(upperCollRect.left, upperCollRect.top + 63,
+				upperCollRect.left + 68, upperCollRect.top + 128);
+		leftCollRect.set(upperCollRect.left - 26, upperCollRect.top + 32,
+				upperCollRect.left, upperCollRect.top + 52);
+		rightCollRect.set(upperCollRect.left + 68, upperCollRect.top + 32,
+				upperCollRect.left + 94, upperCollRect.top + 52);
 		leftFootCollRect.set(centerX - 50, centerY + 20, centerX, centerY + 35);
-		rightFootCollRect.set(centerX, centerY + 20, centerX + 50, centerY + 35);
-		robotAreaRect.set(centerX - 110, centerY - 110, centerX + 70, centerY + 70);
+		rightFootCollRect
+				.set(centerX, centerY + 20, centerX + 50, centerY + 35);
+		robotAreaRect.set(centerX - 110, centerY - 110, centerX + 70,
+				centerY + 70);
 	}
 
 	public void moveRight() {

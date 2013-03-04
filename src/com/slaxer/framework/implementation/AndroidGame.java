@@ -45,10 +45,8 @@ public abstract class AndroidGame extends Activity implements Game {
 
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		float scaleX = (float) frameBufferWidth
-				/ metrics.widthPixels;
-		float scaleY = (float) frameBufferHeight
-				/ metrics.heightPixels;
+		float scaleX = (float) frameBufferWidth / metrics.widthPixels;
+		float scaleY = (float) frameBufferHeight / metrics.heightPixels;
 
 		renderView = new AndroidFastRenderView(this, frameBuffer);
 		graphics = new AndroidGraphics(getAssets(), frameBuffer);
@@ -81,12 +79,12 @@ public abstract class AndroidGame extends Activity implements Game {
 		if (isFinishing())
 			screen.dispose();
 	}
-	
+
 	@Override
-	public Input getInput(){
+	public Input getInput() {
 		return input;
 	}
-	
+
 	@Override
 	public Graphics getGraphics() {
 		return graphics;
@@ -101,20 +99,20 @@ public abstract class AndroidGame extends Activity implements Game {
 	public FileIO getFileIO() {
 		return fileIO;
 	}
-	
+
 	@Override
-	public void setScreen(Screen screen){
-		if(screen == null)
+	public void setScreen(Screen screen) {
+		if (screen == null)
 			throw new IllegalArgumentException("Screen must not be null");
-		
+
 		this.screen.pause();
 		this.screen.dispose();
 		screen.resume();
 		screen.update(0);
 		this.screen = screen;
 	}
-	
-	public Screen getCurrentScreen(){
+
+	public Screen getCurrentScreen() {
 		return screen;
 	}
 

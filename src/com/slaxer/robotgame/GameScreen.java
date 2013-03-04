@@ -88,41 +88,42 @@ public class GameScreen extends Screen {
 
 	}
 
-	private void loadMap(){
+	private void loadMap() {
 		ArrayList<String> lines = new ArrayList<String>();
 		int width = 0;
 		int height = 0;
-		
+
 		Scanner mapScanner = new Scanner(SampleGame.map);
-		while(mapScanner.hasNextLine()){
+		while (mapScanner.hasNextLine()) {
 			String currentLine = mapScanner.nextLine();
-			
+
 			// Out of lines? Abort! Abort!
-			if(currentLine == null)
+			if (currentLine == null)
 				break;
-			
+
 			// An exclamation mark indicates a comment
 			// Anything else SHOULD BE a valid map layout definition
-			if(!currentLine.startsWith("!")){
+			if (!currentLine.startsWith("!")) {
 				lines.add(currentLine);
 				// This way, we know how wide to make the map.
 				width = Math.max(width, currentLine.length());
 			}
-			
+
 		}
 		// Number of lines should indicate our height in tiles
 		height = lines.size();
-		
-		for(int mapYIndex = 0; mapYIndex < height; mapYIndex++){
+
+		for (int mapYIndex = 0; mapYIndex < height; mapYIndex++) {
 			String currentLine = (String) lines.get(mapYIndex);
 			// Zip through the entirety of each line
-			for(int mapXIndex = 0; mapXIndex < width; mapXIndex++){
-				if(mapXIndex < currentLine.length()){
+			for (int mapXIndex = 0; mapXIndex < width; mapXIndex++) {
+				if (mapXIndex < currentLine.length()) {
 					char tileValue = currentLine.charAt(mapXIndex);
-					Tile tile = new Tile(mapXIndex, mapYIndex, Character.getNumericValue(tileValue));
+					Tile tile = new Tile(mapXIndex, mapYIndex,
+							Character.getNumericValue(tileValue));
 					tileArray.add(tile);
 				}
-				
+
 			}
 		}
 	}
@@ -294,7 +295,8 @@ public class GameScreen extends Screen {
 	private void updateGameOver(List<TouchEvent> touchEvents) {
 		int touchEventsSize = touchEvents.size();
 		for (int touchEventIndex = 0; touchEventIndex < touchEventsSize; touchEventIndex++) {
-			TouchEvent currentEvent = (TouchEvent) touchEvents.get(touchEventIndex);
+			TouchEvent currentEvent = (TouchEvent) touchEvents
+					.get(touchEventIndex);
 			// If the user touches anywhere in the screen
 			// while the game over screen is shown,
 			// clean up and return to the menu (on a new game.)
@@ -438,7 +440,7 @@ public class GameScreen extends Screen {
 	@Override
 	public void pause() {
 		// No sense pausing if we weren't already running
-		if(state == GameState.Running)
+		if (state == GameState.Running)
 			state = GameState.Paused;
 
 	}
@@ -446,7 +448,7 @@ public class GameScreen extends Screen {
 	@Override
 	public void resume() {
 		// This is how we return from pause
-		if(state == GameState.Paused)
+		if (state == GameState.Paused)
 			state = GameState.Running;
 
 	}
@@ -462,20 +464,20 @@ public class GameScreen extends Screen {
 		pause();
 
 	}
-	
-	private void goToMenu(){
+
+	private void goToMenu() {
 		game.setScreen(new MainMenuScreen(game));
 	}
-	
-	public static Background getBg1(){
+
+	public static Background getBg1() {
 		return bg1;
 	}
-	
-	public static Background getBg2(){
+
+	public static Background getBg2() {
 		return bg2;
 	}
-	
-	public static Robot getRobot(){
+
+	public static Robot getRobot() {
 		return robot;
 	}
 

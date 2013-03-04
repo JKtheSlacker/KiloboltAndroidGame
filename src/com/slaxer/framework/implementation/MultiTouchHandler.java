@@ -12,7 +12,7 @@ import com.slaxer.framework.Pool.PoolObjectFactory;
 
 public class MultiTouchHandler implements TouchHandler {
 	private static final int MAX_TOUCHPOINTS = 10;
-	
+
 	boolean[] isTouched = new boolean[MAX_TOUCHPOINTS];
 	int[] touchX = new int[MAX_TOUCHPOINTS];
 	int[] touchY = new int[MAX_TOUCHPOINTS];
@@ -24,46 +24,50 @@ public class MultiTouchHandler implements TouchHandler {
 	float scaleY;
 
 	public MultiTouchHandler(View view, float scaleX, float scaleY) {
-		PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>(){
+		PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
 			@Override
-			public TouchEvent createObject(){
+			public TouchEvent createObject() {
 				return new TouchEvent();
 			}
 		};
-		
-		touchEventPool = new Pool<TouchEvent> (factory, 100);
+
+		touchEventPool = new Pool<TouchEvent>(factory, 100);
 		view.setOnTouchListener(this);
-		
+
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		synchronized(this){
+		synchronized (this) {
 			int action = event.getAction() & MotionEvent.ACTION_MASK;
 			int pointerIndex = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
 			int pointerCount = event.getPointerCount();
 			TouchEvent touchEvent;
-			for(int touchEventIndex = 0; touchEventIndex < MAX_TOUCHPOINTS; touchEventIndex++){
-				if(touchEventIndex >= pointerCount){
+			for (int touchEventIndex = 0; touchEventIndex < MAX_TOUCHPOINTS; touchEventIndex++) {
+				if (touchEventIndex >= pointerCount) {
 					isTouched[touchEventIndex] = false;
 					id[touchEventIndex] = -1;
 					continue;
 				}
 				int pointerId = event.getPointerId(touchEventIndex);
-				if(event.getAction() != MotionEvent.ACTION_MOVE && touchEventIndex != pointerIndex){
-					// if it's an up/down/cancel/out event, mask the id to see if we should process it for this touch point
+				if (event.getAction() != MotionEvent.ACTION_MOVE
+						&& touchEventIndex != pointerIndex) {
+					// if it's an up/down/cancel/out event, mask the id to see
+					// if we should process it for this touch point
 					continue;
 				}
-				switch(action){
+				switch (action) {
 				case MotionEvent.ACTION_DOWN:
 				case MotionEvent.ACTION_POINTER_DOWN:
 					touchEvent = touchEventPool.newObject();
 					touchEvent.type = TouchEvent.TOUCH_DOWN;
 					touchEvent.pointer = pointerId;
-					touchEvent.x = touchX[touchEventIndex] = (int)(event.getX(touchEventIndex) * scaleX);
-					touchEvent.y = touchY[touchEventIndex] = (int)(event.getY(touchEventIndex)* scaleY);
+					touchEvent.x = touchX[touchEventIndex] = (int) (event
+							.getX(touchEventIndex) * scaleX);
+					touchEvent.y = touchY[touchEventIndex] = (int) (event
+							.getY(touchEventIndex) * scaleY);
 					isTouched[touchEventIndex] = true;
 					id[touchEventIndex] = pointerId;
 					touchEventsBuffer.add(touchEvent);
@@ -74,8 +78,10 @@ public class MultiTouchHandler implements TouchHandler {
 					touchEvent = touchEventPool.newObject();
 					touchEvent.type = TouchEvent.TOUCH_UP;
 					touchEvent.pointer = pointerId;
-					touchEvent.x = touchX[touchEventIndex] = (int)(event.getX(touchEventIndex) * scaleX);
-					touchEvent.y = touchY[touchEventIndex] = (int)(event.getY(touchEventIndex)* scaleY);
+					touchEvent.x = touchX[touchEventIndex] = (int) (event
+							.getX(touchEventIndex) * scaleX);
+					touchEvent.y = touchY[touchEventIndex] = (int) (event
+							.getY(touchEventIndex) * scaleY);
 					isTouched[touchEventIndex] = false;
 					id[touchEventIndex] = -1;
 					touchEventsBuffer.add(touchEvent);
@@ -84,8 +90,10 @@ public class MultiTouchHandler implements TouchHandler {
 					touchEvent = touchEventPool.newObject();
 					touchEvent.type = TouchEvent.TOUCH_DRAGGED;
 					touchEvent.pointer = pointerId;
-					touchEvent.x = touchX[touchEventIndex] = (int)(event.getX(touchEventIndex) * scaleX);
-					touchEvent.y = touchY[touchEventIndex] = (int)(event.getY(touchEventIndex)* scaleY);
+					touchEvent.x = touchX[touchEventIndex] = (int) (event
+							.getX(touchEventIndex) * scaleX);
+					touchEvent.y = touchY[touchEventIndex] = (int) (event
+							.getY(touchEventIndex) * scaleY);
 					isTouched[touchEventIndex] = true;
 					id[touchEventIndex] = pointerId;
 					touchEventsBuffer.add(touchEvent);
@@ -98,9 +106,9 @@ public class MultiTouchHandler implements TouchHandler {
 
 	@Override
 	public boolean isTouchDown(int pointer) {
-		synchronized(this){
+		synchronized (this) {
 			int index = getIndex(pointer);
-			if(index < 0 || index >= MAX_TOUCHPOINTS)
+			if (index < 0 || index >= MAX_TOUCHPOINTS)
 				return false;
 			else
 				return isTouched[index];
@@ -109,9 +117,9 @@ public class MultiTouchHandler implements TouchHandler {
 
 	@Override
 	public int getTouchX(int pointer) {
-		synchronized(this){
+		synchronized (this) {
 			int index = getIndex(pointer);
-			if(index < 0 || index >= MAX_TOUCHPOINTS)
+			if (index < 0 || index >= MAX_TOUCHPOINTS)
 				return 0;
 			else
 				return touchX[index];
@@ -120,9 +128,9 @@ public class MultiTouchHandler implements TouchHandler {
 
 	@Override
 	public int getTouchY(int pointer) {
-		synchronized(this){
+		synchronized (this) {
 			int index = getIndex(pointer);
-			if(index < 0 || index >= MAX_TOUCHPOINTS)
+			if (index < 0 || index >= MAX_TOUCHPOINTS)
 				return 0;
 			else
 				return touchY[index];
@@ -131,9 +139,9 @@ public class MultiTouchHandler implements TouchHandler {
 
 	@Override
 	public List<TouchEvent> getTouchEvents() {
-		synchronized(this){
+		synchronized (this) {
 			int length = touchEvents.size();
-			for(int touchEventIndex = 0; touchEventIndex < length; touchEventIndex++){
+			for (int touchEventIndex = 0; touchEventIndex < length; touchEventIndex++) {
 				touchEventPool.free(touchEvents.get(touchEventIndex));
 			}
 			touchEvents.clear();
@@ -142,10 +150,10 @@ public class MultiTouchHandler implements TouchHandler {
 			return touchEvents;
 		}
 	}
-	
-	private int getIndex(int pointerId){
-		for(int index = 0; index < MAX_TOUCHPOINTS; index++){
-			if(id[index] == pointerId)
+
+	private int getIndex(int pointerId) {
+		for (int index = 0; index < MAX_TOUCHPOINTS; index++) {
+			if (id[index] == pointerId)
 				return index;
 		}
 		// No index? Can't have a negative index!
