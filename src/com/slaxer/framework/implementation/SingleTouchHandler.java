@@ -90,7 +90,7 @@ public class SingleTouchHandler implements TouchHandler {
 	public List<TouchEvent> getTouchEvents() {
 		synchronized (this) {
 			int length = touchEvents.size();
-			for (int touchEventPoolIndex = 0; touchEventPoolIndex < length; touchEventPoolIndex = 0) {
+			for (int touchEventPoolIndex = 0; touchEventPoolIndex < length; touchEventPoolIndex++) {
 				touchEventPool.free(touchEvents.get(touchEventPoolIndex));
 			}
 			touchEvents.clear();
