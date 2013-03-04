@@ -105,6 +105,7 @@ public class AndroidGraphics implements Graphics {
 		canvas.drawText(text, x, y, paint);
 	}
 
+	@Override
 	public void drawImage(Image image, int x, int y, int srcX, int srcY,
 			int srcWidth, int srcHeight) {
 		srcRect.left = srcX;
