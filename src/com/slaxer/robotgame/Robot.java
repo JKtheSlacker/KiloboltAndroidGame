@@ -196,7 +196,7 @@ public class Robot {
 		this.movingRight = movingRight;
 	}
 
-	public ArrayList getProjectiles() {
+	public ArrayList<Projectile> getProjectiles() {
 		return projectiles;
 	}
 

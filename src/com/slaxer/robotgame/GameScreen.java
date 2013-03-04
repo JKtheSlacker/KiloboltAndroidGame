@@ -113,8 +113,7 @@ public class GameScreen extends Screen {
 		// Number of lines should indicate our height in tiles
 		height = lines.size();
 		
-		// The screen will be 12 tiles high.
-		for(int mapYIndex = 0; mapYIndex < 12; mapYIndex++){
+		for(int mapYIndex = 0; mapYIndex < height; mapYIndex++){
 			String currentLine = (String) lines.get(mapYIndex);
 			// Zip through the entirety of each line
 			for(int mapXIndex = 0; mapXIndex < width; mapXIndex++){
