@@ -28,7 +28,7 @@ public class GameScreen extends Screen {
 	private Image heliboy, heliboy2, heliboy3, heliboy4, heliboy5;
 	private Animation anim, hanim;
 
-	private ArrayList tileArray = new ArrayList();
+	private ArrayList<Tile> tileArray = new ArrayList<Tile>();
 
 	int livesLeft = 1;
 	Paint paint, paint2;
@@ -89,7 +89,7 @@ public class GameScreen extends Screen {
 	}
 
 	private void loadMap(){
-		ArrayList lines = new ArrayList();
+		ArrayList<String> lines = new ArrayList<String>();
 		int width = 0;
 		int height = 0;
 		
@@ -130,7 +130,7 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void update(float deltaTime) {
-		List touchEvents = game.getInput().getTouchEvents();
+		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 
 		// We have four separate update methods in this example.
 		// Depending on the state of the game, we call different
@@ -152,7 +152,7 @@ public class GameScreen extends Screen {
 
 	}
 
-	private void updateReady(List touchEvents) {
+	private void updateReady(List<TouchEvent> touchEvents) {
 
 		// This example starts with a "Ready" screen.
 		// When the user touches the screen, the game
@@ -164,7 +164,7 @@ public class GameScreen extends Screen {
 
 	}
 
-	private void updateRunning(List touchEvents, float deltaTime) {
+	private void updateRunning(List<TouchEvent> touchEvents, float deltaTime) {
 
 		// This is identical to the update() method from Unit 2/3.
 
@@ -236,7 +236,7 @@ public class GameScreen extends Screen {
 			else if (!robot.isJumped() && !robot.isDucked())
 				currentSprite = anim.getImage();
 
-			ArrayList projectiles = robot.getProjectiles();
+			ArrayList<Projectile> projectiles = robot.getProjectiles();
 			for (int projectileIndex = 0; projectileIndex < projectiles.size(); projectileIndex++) {
 				Projectile projectile = (Projectile) projectiles
 						.get(projectileIndex);
@@ -269,7 +269,7 @@ public class GameScreen extends Screen {
 			return false;
 	}
 
-	private void updatePaused(List touchEvents) {
+	private void updatePaused(List<TouchEvent> touchEvents) {
 		int touchEventsSize = touchEvents.size();
 		for (int touchEventIndex = 0; touchEventIndex < touchEventsSize; touchEventIndex++) {
 			TouchEvent currentEvent = (TouchEvent) touchEvents
@@ -292,7 +292,7 @@ public class GameScreen extends Screen {
 
 	}
 
-	private void updateGameOver(List touchEvents) {
+	private void updateGameOver(List<TouchEvent> touchEvents) {
 		int touchEventsSize = touchEvents.size();
 		for (int touchEventIndex = 0; touchEventIndex < touchEventsSize; touchEventIndex++) {
 			TouchEvent currentEvent = (TouchEvent) touchEvents.get(touchEventIndex);
@@ -327,7 +327,7 @@ public class GameScreen extends Screen {
 		paintTiles(g);
 
 		// Now we want the bullets:
-		ArrayList projectiles = robot.getProjectiles();
+		ArrayList<Projectile> projectiles = robot.getProjectiles();
 		for (int projectileIndex = 0; projectileIndex < projectiles.size(); projectileIndex++) {
 			Projectile projectile = (Projectile) projectiles
 					.get(projectileIndex);
