@@ -40,12 +40,12 @@ public class Tile {
 	public void update() {
 		speedX = bg.getSpeedX() * 5;
 		tileX += speedX;
-		collRect.set(tileX, tileY, 40, 40);
+		collRect.set(tileX, tileY, tileX + 40, tileY + 40);
 
 		if (Rect.intersects(collRect, Robot.robotAreaRect) && type != 0) {
 			checkVerticalCollision(Robot.upperCollRect, Robot.lowerCollRect);
 			checkSideCollision(Robot.leftCollRect, Robot.rightCollRect,
-					Robot.leftFootCollRect, robot.rightFootCollRect);
+					Robot.leftFootCollRect, Robot.rightFootCollRect);
 		}
 	}
 
