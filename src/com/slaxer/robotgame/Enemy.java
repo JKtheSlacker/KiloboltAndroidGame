@@ -1,53 +1,56 @@
 package com.slaxer.robotgame;
 
-import java.awt.Rectangle;
+import android.graphics.Rect;
 
 public class Enemy {
 	private int power, speedX, centerX, centerY;
-	private Background bg = StartingClass.getBg1();
-	private Robot robot = StartingClass.getRobot();
+	private Background bg = GameScreen.getBg1();
+	private Robot robot = GameScreen.getRobot();
 	public int health = 5;
-	
+
 	private int movementSpeed;
-	
-	public Rectangle collRect = new Rectangle(0,0,0,0);
-	
-	//Behavioral methods
-	public void update(){
+
+	public Rect collRect = new Rect(0, 0, 0, 0);
+
+	// Behavioral methods
+	public void update() {
 		follow();
 		centerX += speedX;
 		speedX = bg.getSpeedX() * 5 + movementSpeed;
-		collRect.setBounds(centerX - 25, centerY - 25, 50, 60);
-		
-		if (collRect.intersects(Robot.robotAreaRectangle))
+		collRect.set(centerX - 25, centerY - 25, centerX + 25, centerY + 35);
+
+		if (Rect.intersects(collRect, Robot.robotAreaRect))
 			checkCollision();
 	}
-	
-	private void checkCollision(){
-		if (collRect.intersects(Robot.upperCollRect) || collRect.intersects(Robot.lowerCollRect) || collRect.intersects(Robot.leftCollRect) || collRect.intersects(Robot.rightCollRect))
+
+	private void checkCollision() {
+		if (Rect.intersects(collRect, Robot.upperCollRect)
+				|| Rect.intersects(collRect, Robot.lowerCollRect)
+				|| Rect.intersects(collRect, Robot.leftCollRect)
+				|| Rect.intersects(collRect, Robot.rightCollRect)){
 			// DEBUG Put real code here
-			System.out.println("collision");
+		}
 	}
-	
-	public void follow(){
+
+	public void follow() {
 		if (centerX < -95 || centerX > 810)
 			movementSpeed = 0;
 		else if (Math.abs(robot.getCenterX() - centerX) < 5)
 			movementSpeed = 0;
-		else{
-			if(robot.getCenterX() >= centerX)
+		else {
+			if (robot.getCenterX() >= centerX)
 				movementSpeed = 1;
 			else
 				movementSpeed = -1;
 		}
 	}
-	
-	public void die(){
-		
+
+	public void die() {
+
 	}
-	
-	public void attack(){
-		
+
+	public void attack() {
+
 	}
 
 	public int getPower() {
