@@ -1,11 +1,11 @@
 package com.slaxer.robotgame;
 
-import java.awt.Rectangle;
+import android.graphics.Rect;
 
 public class Projectile {
 	private int x, y, speedX;
 	private boolean visible;
-	private Rectangle collRect;
+	private Rect collRect;
 
 	public Projectile(int startX, int startY) {
 		x = startX;
@@ -13,12 +13,12 @@ public class Projectile {
 		speedX = 7;
 		visible = true;
 		
-		collRect = new Rectangle(0,0,0,0);
+		collRect = new Rect(0,0,0,0);
 	}
 	
 	public void update(){
 		x += speedX;
-		collRect.setBounds(x,y,10,5);
+		collRect.set(x,y,x+10,x+5);
 		if (x > 800){
 			visible = false;
 			collRect = null;
@@ -29,24 +29,22 @@ public class Projectile {
 	}
 	
 	private void checkCollision(){
-		if(collRect.intersects(StartingClass.hb.collRect)){
+		if(Rect.intersects(collRect, GameScreen.hb.collRect)){
 			visible = false;
 			
-			if (StartingClass.hb.health > 0)
-				StartingClass.hb.health -= 1;
-			if (StartingClass.hb.health == 0){
-				StartingClass.hb.setCenterX(-100);
-				StartingClass.score += 5;
+			if (GameScreen.hb.health > 0)
+				GameScreen.hb.health -= 1;
+			if (GameScreen.hb.health == 0){
+				GameScreen.hb.setCenterX(-100);
 			}
 		}
-		if(collRect.intersects(StartingClass.hb2.collRect)){
+		if(Rect.intersects(collRect, GameScreen.hb2.collRect)){
 			visible = false;
 			
-			if (StartingClass.hb2.health > 0)
-				StartingClass.hb2.health -= 1;
-			if (StartingClass.hb2.health == 0){
-				StartingClass.hb2.setCenterX(-100);
-				StartingClass.score += 5;
+			if (GameScreen.hb2.health > 0)
+				GameScreen.hb2.health -= 1;
+			if (GameScreen.hb2.health == 0){
+				GameScreen.hb2.setCenterX(-100);
 			}
 
 		}
