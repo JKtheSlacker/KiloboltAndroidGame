@@ -75,7 +75,7 @@ public class GameScreen extends Screen {
 
 		// Define a paint object to use
 		paint = new Paint();
-		paint.setTextSize(100);
+		paint.setTextSize(30);
 		paint.setTextAlign(Paint.Align.CENTER);
 		paint.setAntiAlias(true);
 		paint.setColor(Color.WHITE);
@@ -275,18 +275,19 @@ public class GameScreen extends Screen {
 			TouchEvent currentEvent = (TouchEvent) touchEvents
 					.get(touchEventIndex);
 			// The user picks up their finger
-			if (currentEvent.type == TouchEvent.TOUCH_UP)
+			if (currentEvent.type == TouchEvent.TOUCH_UP) {
 				// Anywhere on the top of the screen except in the upper left
 				// corner
 				if (inBounds(currentEvent, 0, 0, 800, 240))
 					if (!inBounds(currentEvent, 0, 0, 35, 35))
 						// unPause
 						resume();
-			// If anywhere in the lower half of the screen
-			if (inBounds(currentEvent, 0, 240, 800, 240)) {
-				// Clean up and go to menu.
-				nullify();
-				goToMenu();
+				// If anywhere in the lower half of the screen
+				if (inBounds(currentEvent, 0, 240, 800, 240)) {
+					// Clean up and go to menu.
+					nullify();
+					goToMenu();
+				}
 			}
 		}
 
