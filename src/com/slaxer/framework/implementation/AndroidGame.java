@@ -8,6 +8,7 @@ import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -42,10 +43,12 @@ public abstract class AndroidGame extends Activity implements Game {
 		Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
 				frameBufferHeight, Config.RGB_565);
 
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		float scaleX = (float) frameBufferWidth
-				/ getWindowManager().getDefaultDisplay().getWidth();
+				/ metrics.widthPixels;
 		float scaleY = (float) frameBufferHeight
-				/ getWindowManager().getDefaultDisplay().getHeight();
+				/ metrics.heightPixels;
 
 		renderView = new AndroidFastRenderView(this, frameBuffer);
 		graphics = new AndroidGraphics(getAssets(), frameBuffer);
