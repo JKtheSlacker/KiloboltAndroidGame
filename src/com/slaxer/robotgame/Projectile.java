@@ -18,12 +18,12 @@ public class Projectile {
 
 	public void update() {
 		x += speedX;
-		collRect.set(x, y, x + 10, x + 5);
+		collRect.set(x, y, x + 10, y + 5);
 		if (x > 800) {
 			visible = false;
 			collRect = null;
 		}
-		if (x < 800) {
+		if (visible) {
 			checkCollision();
 		}
 	}
