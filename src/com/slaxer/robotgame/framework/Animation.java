@@ -5,56 +5,56 @@ import java.util.ArrayList;
 import com.slaxer.framework.Image;
 
 public class Animation {
-	private ArrayList frames;
+	private ArrayList<AnimFrame> frames;
 	private int currentFrame;
 	private long animTime;
 	private long totalDuration;
 
 	public Animation() {
-		frames = new ArrayList();
+		frames = new ArrayList<AnimFrame>();
 		totalDuration = 0;
-		
-		synchronized(this){
+
+		synchronized (this) {
 			animTime = 0;
 			currentFrame = 0;
 		}
 	}
-	
-	public synchronized void addFrame(Image image, long duration){
+
+	public synchronized void addFrame(Image image, long duration) {
 		totalDuration += duration;
 		frames.add(new AnimFrame(image, totalDuration));
 	}
-	
-	public synchronized void update(long elapsedTime){
-		if (frames.size() > 1){
+
+	public synchronized void update(long elapsedTime) {
+		if (frames.size() > 1) {
 			animTime += elapsedTime;
-			if(animTime >= totalDuration){
+			if (animTime >= totalDuration) {
 				animTime = animTime % totalDuration;
 				currentFrame = 0;
 			}
-			
-			while(animTime > getFrame(currentFrame).endTime)
+
+			while (animTime > getFrame(currentFrame).endTime)
 				currentFrame++;
 		}
-			
+
 	}
-	
-	public synchronized Image getImage(){
-		if(frames.size() == 0)
+
+	public synchronized Image getImage() {
+		if (frames.size() == 0)
 			return null;
 		else
 			return getFrame(currentFrame).image;
 	}
-	
-	private AnimFrame getFrame(int index){
+
+	private AnimFrame getFrame(int index) {
 		return (AnimFrame) frames.get(index);
 	}
-	
+
 	private class AnimFrame {
 		Image image;
 		long endTime;
-		
-		public AnimFrame(Image image, long endTime){
+
+		public AnimFrame(Image image, long endTime) {
 			this.image = image;
 			this.endTime = endTime;
 		}
