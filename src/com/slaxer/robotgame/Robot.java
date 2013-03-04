@@ -16,8 +16,8 @@ public class Robot {
 	private boolean ducked = false;
 	private boolean readyToFire = true;
 
-	private static Background bg1 = GameScreen.getBg1();
-	private static Background bg2 = GameScreen.getBg2();
+	private Background bg1 = GameScreen.getBg1();
+	private Background bg2 = GameScreen.getBg2();
 
 	private int speedX = 0;
 	private int speedY = 0;
