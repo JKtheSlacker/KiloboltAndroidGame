@@ -15,7 +15,6 @@ public class MainMenuScreen extends Screen {
 
 	@Override
 	public void update(float deltaTime) {
-		Graphics g = game.getGraphics();
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 		
 		int touchEventsListSize = touchEvents.size();
