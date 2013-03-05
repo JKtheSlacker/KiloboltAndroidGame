@@ -221,42 +221,42 @@ public class GameScreen extends Screen {
 					robot.stopRight();
 				}
 			}
+		}
 
-			// 2. Check miscellaneous events like death:
+		// 2. Check miscellaneous events like death:
 
-			if (livesLeft == 0)
-				state = GameState.GameOver;
+		if (livesLeft == 0)
+			state = GameState.GameOver;
 
-			// 3. Call individual update methods here.
-			// This is where all the game updates happen.
-			// For example, robot.update();
-			robot.update();
-			if (robot.isJumped())
-				currentSprite = Assets.characterJump;
-			else if (!robot.isJumped() && !robot.isDucked())
-				currentSprite = anim.getImage();
+		// 3. Call individual update methods here.
+		// This is where all the game updates happen.
+		// For example, robot.update();
+		robot.update();
+		if (robot.isJumped())
+			currentSprite = Assets.characterJump;
+		else if (!robot.isJumped() && !robot.isDucked())
+			currentSprite = anim.getImage();
 
-			ArrayList<Projectile> projectiles = robot.getProjectiles();
-			for (int projectileIndex = 0; projectileIndex < projectiles.size(); projectileIndex++) {
-				Projectile projectile = (Projectile) projectiles
-						.get(projectileIndex);
-				if (projectile.isVisible())
-					projectile.update();
-				else
-					projectiles.remove(projectileIndex);
-			}
+		ArrayList<Projectile> projectiles = robot.getProjectiles();
+		for (int projectileIndex = 0; projectileIndex < projectiles.size(); projectileIndex++) {
+			Projectile projectile = (Projectile) projectiles
+					.get(projectileIndex);
+			if (projectile.isVisible())
+				projectile.update();
+			else
+				projectiles.remove(projectileIndex);
+		}
 
-			updateTiles();
-			hb.update();
-			hb2.update();
-			bg1.update();
-			bg2.update();
-			animate();
+		updateTiles();
+		hb.update();
+		hb2.update();
+		bg1.update();
+		bg2.update();
+		animate();
 
-			// We have fallen to our death.
-			if (robot.getCenterY() > 500) {
-				state = GameState.GameOver;
-			}
+		// We have fallen to our death.
+		if (robot.getCenterY() > 500) {
+			state = GameState.GameOver;
 		}
 	}
 
